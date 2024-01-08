@@ -1,11 +1,11 @@
 class Stock:
-	def __init__(self, name, price, amount, dividend_per_share, div_freq, isin, annual_divs=None, div_yield=None, total_holdings=None):
+	def __init__(self, name, price, amount, dividend_per_share, isin, div_freq=None, annual_divs=None, div_yield=None, total_holdings=None):
 		self.name = name
 		self.price = price
 		self.amount = amount
 		self.dividend_per_share = dividend_per_share
-		self.div_freq = div_freq
 		self.isin = isin
+		self.div_freq = div_freq
 		self.annual_divs = self.amount * self.dividend_per_share
 		self.div_yield = (self.dividend_per_share / self.price)*100
 		self.total_holdings = self.price * self.amount
