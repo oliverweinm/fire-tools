@@ -9,6 +9,11 @@ class Stock:
 		self.annual_divs = self.amount * self.dividend_per_share
 		self.div_yield = (self.dividend_per_share / self.price)*100
 		self.total_holdings = self.price * self.amount
+	def update_amount(amount):
+		self.amount += amount
+	def update_info(price, dividend_per_share):
+		self.price = price
+		self.dividend_per_share = dividend_per_share
 	def calc_div_freq():
 		return NotImplementedError
 	def __str__(self):
