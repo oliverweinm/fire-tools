@@ -1,4 +1,5 @@
 import shelve
+import update
 import pandas as pd
 from stock import Stock
 from os import listdir
@@ -20,7 +21,6 @@ def read_xlsx(filename):
 		db[index] = Stock(index, row[1], row[0], row[2], row[7])
 	db.close()
 
-
 def write_xlsx(filename, values):
 	#TODO: turn the Python shelve back to an xlsx spreadsheet
 	raise NotImplementedError
@@ -30,21 +30,14 @@ def dump_db(db_name="portfolio"):
 	for key in db:
 		print(key, "=>\n   ", db[key].name, db[key].amount, db[key].price)
 
-def load_shelve(db_name="portfolio")
+def load_shelve(db_name="portfolio"):
 	db = shelve.open(db_name)
 	return db
 
-
-if __name__ == "__main__":
-	mode = determine_mode()
-	if mode == "s" or mode == "shelve":
-		db = load_shelve()
-	else:
-		div_directory = input("What is the directory of your portfolio file? << ")
-		print(f"Current files in your portfolio directory:")
-		for file in sorted(dir_contents):
-			print(f"\t {file}")
-		filename = input("What is the full name of your portfolio file? << ")
-		read_xlsx(f"{div_directory}{filename}")
-	dump_db()
-	update_yn = input("Do you want to automatically update your portfolio data before working on it?")
+def update_stocks(db):
+	#TODO: iterate through all isins and call get_consorsbank_info
+	for key in db:
+		isin = db[key].isin
+		updates = update.get_consorsbank_info(isin)
+		db[key].price = updates[0]
+		db[key].dividend_per_share = updates[1]
